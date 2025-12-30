@@ -1,0 +1,22 @@
+{
+  "name": "ldss_website",
+  "version": "1.0.0",
+  "description": "A modern school management platform built to streamline academic, administrative, and communication workflows. The LDSS brand uses a **green primary palette (Hex #1B5E20)** to reflect the official uniform color across the UI and marketing assets.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "lint": "npm run lint --prefix backend && npm run lint --prefix frontend",
+    "test": "npm run test --prefix backend && npm run test --prefix frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Staff Login</title>
+</head>
+<body>
+    <h1>Test Staff Login</h1>
+    <button onclick="testStaffLogin()">Test Staff Login</button>
+    <div id="result"></div>
+
+    <script>
+        async function testStaffLogin() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing staff login...';
+            
+            try {
+                const response = await fetch('http://localhost:4000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: '2025001',
+                        password: 'LDSSstaff123',
+                        role: 'staff'
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Staff login response:', data);
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <h3>✅ Staff Login Successful!</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p><strong>User Role:</strong> ${data.user.role}</p>
+                        <p><strong>TS Number:</strong> ${data.user.profile?.staff?.tsNumber}</p>
+                        <p><strong>Position:</strong> ${data.user.profile?.staff?.position}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h3>❌ Staff Login Failed</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
