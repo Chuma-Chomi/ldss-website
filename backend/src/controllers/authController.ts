@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { ApiError } from '../utils/errors';
 import { asyncHandler } from '../utils/asyncHandler';
+import { prisma } from '../lib/prisma';
+import bcrypt from 'bcryptjs';
 
 // User types based on ID patterns
 interface UserIdentity {
@@ -93,20 +95,36 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(400, 'Identifier and password are required');
   }
 
-  // Determine user identity based on ID pattern
-  const user = determineUserIdentity(identifier);
+  // Find user in database
+  const user = await prisma.user.findUnique({
+    where: { id: identifier },
+    include: { 
+      profile: {
+        include: {
+          staff: true,
+          student: true
+        }
+      }
+    }
+  });
+
   if (!user) {
     throw new ApiError(401, 'Invalid credentials - User not found');
   }
 
   // Verify password
-  const isPasswordValid = await verifyPassword(user.role, password);
+  const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     throw new ApiError(401, 'Invalid credentials - Incorrect password');
   }
 
   // Generate JWT token
-  const token = generateJWT(user);
+  const token = generateJWT({
+    id: user.id,
+    role: user.role === 'TEACHER' ? 'STAFF' : user.role === 'STUDENT' ? 'LEARNER' : user.role === 'ADMIN' ? 'ADMIN' : 'STAFF',
+    departmentId: user.role === 'ADMIN' ? 'admin-dept' : user.role === 'TEACHER' ? 'staff-dept' : 'learner-dept',
+    name: `${user.profile?.firstName || ''} ${user.profile?.lastName || ''}`.trim() || user.role
+  });
 
   // Set HttpOnly cookie with JWT (for backup)
   res.cookie('jwt', token, COOKIE_OPTIONS);
@@ -117,9 +135,9 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
     token: token,
     user: {
       id: user.id,
-      role: user.role,
-      departmentId: user.departmentId,
-      name: user.name
+      role: user.role === 'TEACHER' ? 'STAFF' : user.role === 'STUDENT' ? 'LEARNER' : user.role === 'ADMIN' ? 'ADMIN' : 'STAFF',
+      departmentId: user.role === 'ADMIN' ? 'admin-dept' : user.role === 'TEACHER' ? 'staff-dept' : 'learner-dept',
+      name: `${user.profile?.firstName || ''} ${user.profile?.lastName || ''}`.trim() || user.role
     },
     message: 'Login successful'
   };
