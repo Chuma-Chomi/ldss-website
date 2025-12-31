@@ -18,7 +18,7 @@ interface Stats {
 export function SimpleAdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,17 +27,17 @@ export function SimpleAdminDashboard() {
         const token = sessionStorage.getItem('token');
         console.log('Fetching stats with token:', token ? 'Token exists' : 'No token');
         console.log('Token value:', token);
-        
+
         const response = await fetch(getApiUrl('/api/admin/stats'), {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         });
-        
+
         console.log('Response status:', response.status);
         console.log('Response headers:', response.headers);
-        
+
         if (response.ok) {
           const data = await response.json();
           setStats(data.data);

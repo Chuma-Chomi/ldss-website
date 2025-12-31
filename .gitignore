@@ -39,3 +39,6 @@ prisma/dev.db
 .cache/
 temp/
 tmp/
+
+# Local Netlify folder
+.netlify

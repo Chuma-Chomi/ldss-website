@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 type DashboardLayoutProps = {
   children: ReactNode;
@@ -9,7 +8,6 @@ type DashboardLayoutProps = {
 
 export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -19,7 +17,7 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
           <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
           <div className="flex items-center space-x-4">
             <span className="text-gray-700">{user?.name}</span>
-            <button 
+            <button
               onClick={logout}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
