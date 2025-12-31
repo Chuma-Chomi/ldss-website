@@ -73,7 +73,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
             firstName: payload.profile.firstName,
             lastName: payload.profile.lastName,
             phone: payload.profile.phone,
-            type: 'LEARNER',
+            type: 'STUDENT',
             userId: user.id,
           },
         },

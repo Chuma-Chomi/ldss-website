@@ -33,7 +33,6 @@ export const createUser = asyncHandler(async (req: Request, res: Response, next:
         create: {
           firstName,
           lastName,
-          email: email || null,
           phone: phone || null,
           type: role === 'ADMIN' ? 'STAFF' : role === 'TEACHER' ? 'STAFF' : 'STUDENT'
         }
