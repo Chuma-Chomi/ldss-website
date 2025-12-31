@@ -1,5 +1,4 @@
 /*    /index.html   200
 
-{{ ... }}
-/api/* https://your-render-backend-url.com/:splat 200
-/api/* https://your-render-backend-url.com/:splat 200!
+# API Proxy to Render backend
+/api/* https://ldss-backend-5tl3.onrender.com/api/:splat 200!
