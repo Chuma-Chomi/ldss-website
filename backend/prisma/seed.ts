@@ -11,6 +11,7 @@ async function main() {
     where: { email: 'admin@ldss.edu.zm' },
     update: {},
     create: {
+      id: '202501',
       email: 'admin@ldss.edu.zm',
       password: adminPassword,
       role: Role.ADMIN,
@@ -38,6 +39,7 @@ async function main() {
     where: { email: 'staff@ldss.edu.zm' },
     update: {},
     create: {
+      id: '2025001',
       email: 'staff@ldss.edu.zm',
       password: staffPassword, // Hashed staff password
       role: Role.TEACHER,
@@ -65,6 +67,7 @@ async function main() {
     where: { email: 'learner@ldss.edu.zm' },
     update: {},
     create: {
+      id: '202500123456',
       email: 'learner@ldss.edu.zm',
       password: 'LDSS2025', // Default password for learners
       role: Role.STUDENT,
@@ -73,7 +76,7 @@ async function main() {
           firstName: 'John',
           lastName: 'Banda',
           phone: '+260555555555',
-          type: ProfileType.STUDENT,
+          type: ProfileType.LEARNER,
           student: {
             create: {
               learnerId: '202500123456', // Exam number (12 digits) stored as learnerId

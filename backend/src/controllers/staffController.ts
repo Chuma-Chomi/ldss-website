@@ -47,6 +47,18 @@ export const createStaff = async (req: Request, res: Response, next: NextFunctio
   try {
     const payload = staffSchema.parse(req.body);
 
+    // Create user first
+    const bcrypt = require('bcrypt');
+    const hashedPassword = await bcrypt.hash('temp123', 10);
+    const user = await prisma.user.create({
+      data: {
+        id: `STF-${Date.now()}`,
+        email: `${payload.profile.firstName.toLowerCase()}.${payload.profile.lastName.toLowerCase()}.${Date.now()}@ldss.local`,
+        password: hashedPassword,
+        role: 'TEACHER',
+      },
+    });
+
     const staff = await prisma.staff.create({
       data: {
         tsNumber: payload.tsNumber || `TS-${Date.now()}`,
@@ -58,6 +70,7 @@ export const createStaff = async (req: Request, res: Response, next: NextFunctio
             lastName: payload.profile.lastName,
             phone: payload.profile.phone,
             type: 'STAFF',
+            userId: user.id,
           },
         },
       },

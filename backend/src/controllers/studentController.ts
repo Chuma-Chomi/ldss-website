@@ -55,6 +55,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
     const hashedPassword = await bcrypt.hash('temp123', 10);
     const user = await prisma.user.create({
       data: {
+        id: `STU-${Date.now()}`,
         email: `${payload.profile.firstName.toLowerCase()}.${payload.profile.lastName.toLowerCase()}.${Date.now()}@ldss.local`,
         password: hashedPassword,
         role: 'STUDENT',
@@ -72,7 +73,7 @@ export const createStudent = async (req: Request, res: Response, next: NextFunct
             firstName: payload.profile.firstName,
             lastName: payload.profile.lastName,
             phone: payload.profile.phone,
-            type: 'STUDENT',
+            type: 'LEARNER',
             userId: user.id,
           },
         },

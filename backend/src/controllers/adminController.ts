@@ -3,6 +3,7 @@ import { prisma } from '../lib/prisma';
 import { ApiError } from '../utils/errors';
 import { asyncHandler } from '../utils/asyncHandler';
 import bcrypt from 'bcryptjs';
+import { Role } from '@prisma/client';
 
 // Create a new user
 export const createUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -86,7 +87,7 @@ export const getUsersByRole = asyncHandler(async (req: Request, res: Response, n
   const { role } = req.params;
   
   const users = await prisma.user.findMany({
-    where: { role: role.toUpperCase() },
+    where: { role: role as Role },
     include: {
       profile: {
         include: {

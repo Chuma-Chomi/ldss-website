@@ -34,7 +34,6 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
         classId: data.classId,
         date: new Date(data.date),
         status: data.status,
-        notes: data.notes,
       },
       include: {
         student: {
