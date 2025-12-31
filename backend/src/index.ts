@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth';
 import adminRoutes from './routes/admin';
 import staffRoutes from './routes/staff';
+import seedRoutes from './routes/seed';
 import { errorHandler } from './utils/errors';
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.get('/', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/staff', staffRoutes);
+app.use('/api/seed', seedRoutes);
 // Add other routes if needed
 // app.use('/api/students', studentRoutes);
 // app.use('/api/classes', classRoutes);
