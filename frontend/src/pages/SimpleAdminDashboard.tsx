@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Users, TrendingUp, UserCheck, Trash2 } from 'lucide-react';
+import { getApiUrl } from '../config/api';
 
 interface Stats {
   totalUsers: number;
@@ -45,7 +46,7 @@ export function SimpleAdminDashboard() {
   const fetchStats = async () => {
     try {
       const token = sessionStorage.getItem('token');
-      const response = await fetch('/api/admin/stats', {
+      const response = await fetch(getApiUrl('/api/admin/stats'), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -66,7 +67,7 @@ export function SimpleAdminDashboard() {
     setError('');
     try {
       const token = sessionStorage.getItem('token');
-      const response = await fetch('/api/admin/users', {
+      const response = await fetch(getApiUrl('/api/admin/users'), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -130,7 +131,7 @@ export function SimpleAdminDashboard() {
     
     try {
       const token = sessionStorage.getItem('token');
-      const response = await fetch('/api/admin/users', {
+      const response = await fetch(getApiUrl('/api/admin/users'), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

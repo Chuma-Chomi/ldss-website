@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Users, Calendar } from 'lucide-react';
+import { getApiUrl } from '../config/api';
 
 interface Class {
   id: string;
@@ -41,7 +42,7 @@ export function SimpleStaffDashboard() {
     setLoading(true);
     try {
       const token = sessionStorage.getItem('token');
-      const response = await fetch('/api/staff/classes/my-classes', {
+      const response = await fetch(getApiUrl('/api/staff/classes/my-classes'), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -100,7 +101,7 @@ export function SimpleStaffDashboard() {
         remarks: ''
       }));
 
-      const response = await fetch('/api/staff/attendance/mark', {
+      const response = await fetch(getApiUrl('/api/staff/attendance/mark'), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
