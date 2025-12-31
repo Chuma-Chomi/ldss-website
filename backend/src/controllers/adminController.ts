@@ -35,7 +35,7 @@ export const createUser = asyncHandler(async (req: Request, res: Response, next:
           lastName,
           email: email || null,
           phone: phone || null,
-          type: role === 'ADMIN' ? 'ADMIN' : role === 'TEACHER' ? 'STAFF' : 'LEARNER'
+          type: role === 'ADMIN' ? 'STAFF' : role === 'TEACHER' ? 'STAFF' : 'STUDENT'
         }
       }
     },

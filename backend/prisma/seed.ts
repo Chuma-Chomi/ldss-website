@@ -76,7 +76,7 @@ async function main() {
           firstName: 'John',
           lastName: 'Banda',
           phone: '+260555555555',
-          type: ProfileType.LEARNER,
+          type: ProfileType.STUDENT,
           student: {
             create: {
               learnerId: '202500123456', // Exam number (12 digits) stored as learnerId
